@@ -1,9 +1,24 @@
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, computed, EventEmitter, input, Input, Output, output } from '@angular/core';
 // import { DUMMY_USERS } from '../dummy-users';
 
 // we don't ned random user instead we need all
 // const randomUser = Math.floor(Math.random() * DUMMY_USERS.length)
 
+//Type alias
+// type User = {
+//   id: string,
+//   name: string,
+//   avatar: string
+// }
+
+
+
+//interface type
+interface User  {
+  id: string,
+  name: string,
+  avatar: string
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -17,8 +32,23 @@ export class UserComponent{
   // means it is settable from outside also
   //required true means , the value must be set
   //Decerator approach
-@Input({required:true}) avatar!:string;
-@Input() name!:string;
+
+  //convert this into type object
+// @Input({required: true}) id!:string;
+// @Input({required:true}) avatar!:string;
+// @Input() name!:string;
+
+@Input({required: true}) user!: User;
+
+@Output() select = new EventEmitter();
+// @Output() select = new EventEmitter<string>();
+
+
+
+// this will not give signals will give custom event only , input only create signal
+// use of output function is if you r using input function then u can use output function then u can ignore decerators completely
+// select = output<string>();
+
 
 //signal will be added by default , u can set default value if only u don't pass required
 // avatar = input.required<string>();
@@ -26,14 +56,16 @@ export class UserComponent{
 
 
   get imagePath(){
-    return 'assets/users/' + this.avatar
+    return 'assets/users/' + this.user.avatar
   }
 
   // imagePath = computed(() =>{
   //  return 'assets/users/' + this.avatar()
   // })
 
-  onSelectUser(){}
+  onSelectUser(){
+    this.select.emit(this.user.id)
+  }
 }
 
 // with signals and random user(one only)

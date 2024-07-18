@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
+import { NewTaskComponent } from "./new-task/new-task.component";
+import { NewTaskData } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
@@ -14,14 +16,15 @@ export class TasksComponent {
   @Input({required: true}) userName:string | undefined; //union types
 
   @Input({required: true}) userId!: string;
+ isAddTask = false;
 
   tasks =[
     {
       id:"t1",
       userId: 'u1',
       title : 'Master Angular',
-      summary: ' Learn all the basic and advanced features of Angular',
-      dueDate: '31-07-2024'
+      summary: 'Learn all the basic and advanced features of Angular',
+      dueDate: '2024-05-31'
     },
     {
       id: 't2',
@@ -42,5 +45,29 @@ export class TasksComponent {
 
   get selectedUserTasks() {
     return this.tasks.filter((task) => task.userId === this.userId)
+  }
+
+  onCompleteTask(id: string) {
+    this.tasks = this.tasks.filter((task) => task.id !== id )
+  }
+
+  onAddTask(){
+    this.isAddTask = true;
+  }
+
+  onCancelAddTask () {
+    this.isAddTask = false;
+  }
+
+  onUserAddTask (taskData: NewTaskData) {
+    //unshift to add this data to begining of the array
+    this.tasks.unshift({
+      id: new Date().getTime().toString(),
+      userId: this.userId,
+      title: taskData.title,
+      summary:taskData.summary,
+      dueDate:taskData.date,
+    })
+    this.isAddTask = false;
   }
 }

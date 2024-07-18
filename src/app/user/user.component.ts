@@ -1,5 +1,6 @@
 import { Component, computed, EventEmitter, input, Input, Output, output } from '@angular/core';
 import { User } from './user.model';
+import { CardComponent } from "../shared/card/card.component";
 // import { DUMMY_USERS } from '../dummy-users';
 
 // we don't ned random user instead we need all
@@ -8,7 +9,7 @@ import { User } from './user.model';
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })

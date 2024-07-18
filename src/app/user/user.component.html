@@ -1,4 +1,4 @@
-<div>
+<app-card>
   <button [class.active]="selected" (click)="onSelectUser()">
 <!-- this will not work in image so we can implement property binding  -->
     <!-- <img src="{{selectedUser.avatar}}" alt=""> -->
@@ -10,4 +10,4 @@
     <!-- string Interpolation -->
     <span>{{ user.name }}</span>
   </button>
-</div>
+</app-card>

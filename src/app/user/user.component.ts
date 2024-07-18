@@ -1,24 +1,10 @@
 import { Component, computed, EventEmitter, input, Input, Output, output } from '@angular/core';
+import { User } from './user.model';
 // import { DUMMY_USERS } from '../dummy-users';
 
 // we don't ned random user instead we need all
 // const randomUser = Math.floor(Math.random() * DUMMY_USERS.length)
 
-//Type alias
-// type User = {
-//   id: string,
-//   name: string,
-//   avatar: string
-// }
-
-
-
-//interface type
-interface User  {
-  id: string,
-  name: string,
-  avatar: string
-}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -39,6 +25,7 @@ export class UserComponent{
 // @Input() name!:string;
 
 @Input({required: true}) user!: User;
+@Input({required: true}) selected!: boolean;
 
 @Output() select = new EventEmitter();
 // @Output() select = new EventEmitter<string>();
